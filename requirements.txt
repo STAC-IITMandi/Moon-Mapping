@@ -1,0 +1,38 @@
+# Core numerics and imaging, shared by every stage of the pipeline
+numpy
+pandas
+pillow
+opencv-python
+matplotlib
+scikit-image
+
+# Deep learning (SRGAN and SwinIR models under "AI Models/")
+torch
+torchvision
+pytorch-lightning
+timm
+einops
+tensorboard
+
+# Geospatial work: TMC/OHRC/NAC footprint intersection and coordinate mapping
+#   - geopandas/shapely read the ISRO shapefiles in DataSet/OHRC_ShapeFiles/
+#   - geographiclib does the lunar-ellipsoid geodesy in DataSet/tmc_break.py
+#   - spherical-geometry handles the polar footprints that break planar geometry
+geopandas
+shapely
+geographiclib
+spherical-geometry
+pyshp
+
+# Reading the PDS4 products PRADAN ships (labels + .img), used by DataSet/readOHRC.py
+pds4-tools
+
+# TMC catalogue scraping
+#   (dataset-cleaning-creation-and-analysis/dataset-preparation/scraping.ipynb)
+selenium
+beautifulsoup4
+requests
+
+# Notebooks
+jupyter
+tqdm

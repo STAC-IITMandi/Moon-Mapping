@@ -1,0 +1,1251 @@
+Sequential(
+  (0): Conv2d(3, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (1): PatchEmbed(
+    (norm): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+  )
+  (2): PatchUnEmbed()
+  (3): Dropout(p=0.0, inplace=False)
+  (4): ModuleList(
+    (0): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): Identity()
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.002)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.004)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.006)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.008)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.009)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (1): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.011)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.013)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.015)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.017)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.019)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.021)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (2): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.023)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.025)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.026)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.028)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.030)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.032)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (3): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.034)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.036)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.038)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.040)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.042)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.043)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (4): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.045)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.047)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.049)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.051)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.053)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.055)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (5): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.057)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.058)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.060)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.062)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.064)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.066)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (6): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.068)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.070)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.072)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.074)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.075)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.077)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (7): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.079)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.081)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.083)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.085)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.087)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.089)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (8): RSTB(
+      (residual_group): BasicLayer(
+        dim=240, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.091)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.092)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.094)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.096)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.098)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=240, input_resolution=(64, 64), num_heads=8, window_size=8, shift_size=4, mlp_ratio=2
+            (norm1): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=240, window_size=(8, 8), num_heads=8
+              (qkv): Linear(in_features=240, out_features=720, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=240, out_features=240, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath(drop_prob=0.100)
+            (norm2): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=240, out_features=480, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=480, out_features=240, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): Sequential(
+        (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): LeakyReLU(negative_slope=0.2, inplace=True)
+        (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+        (3): LeakyReLU(negative_slope=0.2, inplace=True)
+        (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+  )
+  (5): LayerNorm((240,), eps=1e-05, elementwise_affine=True)
+  (6): Sequential(
+    (0): Conv2d(240, 60, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): LeakyReLU(negative_slope=0.2, inplace=True)
+    (2): Conv2d(60, 60, kernel_size=(1, 1), stride=(1, 1))
+    (3): LeakyReLU(negative_slope=0.2, inplace=True)
+    (4): Conv2d(60, 240, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+  (7): Sequential(
+    (0): Conv2d(240, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): LeakyReLU(negative_slope=0.01, inplace=True)
+  )
+  (8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (9): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (10): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (11): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (12): LeakyReLU(negative_slope=0.2, inplace=True)
+)

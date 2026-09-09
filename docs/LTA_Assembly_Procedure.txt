@@ -1,0 +1,38 @@
+This is readme file for carrying out the Long Term Archive Assembly for Chandrayaan-2 Mission Payloads - OHRC
+=======================================================================================================================
+
+1. Instrument wise zip file
+
+There will be instrument wise zip files - ohr.zip
+Go to the nop directory under mission bundle archive shown in above step 1.
+unzip the file under nop will create following instrument wise archive
+structure. for e.g. tmc.zip
+ohr
+├── browse
+├── bundle_tmc.xml
+├── calibration
+│   ├── calibration files....
+│   ├── collection_calibration_inventory.csv
+│   └── collection_calibration_inventory.xml
+├── data
+├── document
+│   ├── ch2_tmc2_pds_dp_archive_sis.pdf
+│   ├── ch2_tmc2_pds_dp_archive_sis.xml
+│   ├── collection_document_inventory.csv
+│   └── collection_document_inventory.xml
+├── geometry
+├── miscellaneous
+│   ├── collection_miscellaneous_inventory.csv
+│   ├── collection_miscellaneous_inventory.xml
+│   └── readme.txt
+└── readme.txt
+
+2. Data Products
+The data products will be in zip format. you need to download the data product and
+unzip the product under instrument id wise directory structure
+shown in above steps 2. for e.g. ohr/
+
+after unzipping all the directories - data, browse, geometry and miscellaneous will
+populated with data products.
+
+=============================================================================================================================

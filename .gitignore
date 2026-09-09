@@ -1,0 +1,60 @@
+# ---------------------------------------------------------------------------
+# Data. Everything here is fetched by scripts/download_data.sh from ISRO's
+# PRADAN portal and ASU's LROC archive — see DATA.md. None of it belongs in git.
+# ---------------------------------------------------------------------------
+/data/
+MOON_MAPPING_DATA/
+
+# Raw and intermediate imagery
+*.IMG
+*.img
+*.cub
+*.tif
+*.tiff
+# PDS ancillary products that ship alongside the imagery
+*.lbr
+*.oat
+*.oath
+*.spm
+
+# Bulk archives pulled from PRADAN
+*.zip
+
+# Generated training crops (see DataSet/ and dataset-cleaning-.../scripts/final_gen.py)
+**/DataSet_Gray_8x/
+**/DataSet_Gray_High/
+**/DataSet_Grayscale/
+**/train_data/
+**/generate_data/
+**/images/high/
+**/images/low/
+
+# Model weights and checkpoints
+*.pth
+*.pth.tar
+*.pt
+*.ckpt
+**/Checkpoints/
+**/pretrained_weights/
+**/experiments/pretrained_models/
+**/model_zoo/swinir/
+
+# Training run artefacts
+**/lightning_logs/version_*/events.out.tfevents.*
+**/wandb/
+*.wandb
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -491,9 +491,12 @@ cmd_swinir_weights() {
       && mv "$zoo/$f.part" "$zoo/$f" || { rm -f "$zoo/$f.part"; warn "failed: $f"; }
   fi
   info "SwinIR weights done."
-  warn "The project's own trained checkpoints (SRGAN g_best.pth.tar, the SwinIR
-  L1/SSIM/perceptual-loss runs) were never published to a public mirror. They
-  live only in the project Google Drive — see DATA.md."
+  warn "These are the UPSTREAM SwinIR weights, not this project's.
+  The project's own 136 SwinIR checkpoints (L1 / SSIM / perceptual-loss runs)
+  were never published to a public mirror and live only in the project Google
+  Drive. The SRGAN generator weights do not exist at all — srgan_config.py
+  names g_best.pth.tar / g_last.pth.tar, but neither was ever saved, so the
+  SRGAN runs in no mode until you blank its pretrained_* paths. See DATA.md."
 }
 
 # ---------------------------------------------------------------------------

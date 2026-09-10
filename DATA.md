@@ -136,23 +136,62 @@ the ones PRADAN itself would have used. It works for any instrument.
 
 ## 3. What cannot be re-downloaded
 
-Two things in the original project Google Drive have no public source:
+### The SwinIR checkpoints — in the Drive only
 
-- **The project's own trained checkpoints** — the SRGAN generator
-  (`g_best.pth.tar`, `g_last.pth.tar`) and the SwinIR runs (L1, SSIM,
-  perceptual-loss variants, ~150 checkpoints). `srgan_config.py` expects them at
-  `pretrained_weights/generate/g_best.pth.tar`.
-- **The derived training crops** — the ~39,000 96×96 / 24×24 TMC–NAC image pairs
-  under `SwinIR/DataSet*`.
+136 trained checkpoints live in the
+[project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing)
+under `Models/Moon-Mapping/AI Models/SwinIR/Checkpoints/` and nowhere else:
 
-The crops are *reproducible*: get one TMC–NAC pair, follow the alignment steps in
+| Run | Checkpoints |
+|---|---|
+| `PerceptualLoss/` | 62 |
+| `SSIM Loss - Pretrained Chkpts/` | 33 |
+| `prev_ckpts/` | 20 |
+| `L1_Chkpts/` | 15 |
+| `Checkpoints/` (root) | 4 |
+| `model_1_pl_perceptual_loss/` (Lightning `.ckpt`) | 2 |
+
+They cannot be regenerated without retraining. Copy them out of the Drive by
+hand if you need to run inference rather than train from scratch.
+
+Not to be confused with the 13 `.pth` files under
+`SwinIR/experiments/pretrained_models/` and `SwinIR/model_zoo/swinir/` — those
+are *upstream* SwinIR weights, and `scripts/download_data.sh swinir-weights`
+already fetches them from GitHub.
+
+### The SRGAN weights — they do not exist
+
+`AI Models/Moon Mapping/srgan_config.py` reads its generator from
+`pretrained_weights/generate/g_best.pth.tar` (and `g_last.pth.tar` for resuming
+training), but **no such file was ever saved** — not in this repository, not in
+the project Drive, which contains no `.tar` files at all.
+
+This means the SRGAN does not run in *any* mode as configured:
+
+- `mode = "generate"` / `"evaluate"` need a trained generator, so they cannot
+  work until one exists. `cascade.py` (the ×4 → ×16 cascade) likewise has
+  nothing to load.
+- `mode = "train"` also fails, less obviously. `train_srgan.py` guards its
+  pretrained-weight load with `if srgan_config.pretrained_g_model_weights_path:`
+  — a truthiness test on the *string*, not a check that the file is there. The
+  string is non-empty, so it calls `torch.load()` on the missing
+  `g_last.pth.tar` and dies with `FileNotFoundError`.
+
+To train from scratch, blank both paths in `srgan_config.py`:
+
+```python
+pretrained_d_model_weights_path = ""
+pretrained_g_model_weights_path = ""
+```
+
+### The derived training crops — regenerable
+
+The ~39,000 96×96 / 24×24 TMC–NAC pairs under `SwinIR/DataSet*` in the Drive are
+*reproducible*: get one TMC–NAC pair, follow the alignment steps in
 [`dataset-cleaning-creation-and-analysis/README.md`](dataset-cleaning-creation-and-analysis/README.md),
 then cut them up with
 [`dataset-cleaning-creation-and-analysis/scripts/final_gen.py`](dataset-cleaning-creation-and-analysis/scripts/final_gen.py).
 One pair yields roughly 13,000 crops.
-
-The checkpoints are not reproducible without retraining. They remain in the
-[project Drive folder](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing).
 
 ---
 

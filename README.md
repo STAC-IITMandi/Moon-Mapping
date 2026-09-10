@@ -17,7 +17,7 @@ Two model families were tried, an SRGAN and a SwinIR transformer.
 ## Quick start
 
 ```bash
-git clone https://github.com/Sukhvansh2004/Moon-Mapping.git
+git clone https://github.com/STAC-IITMandi/Moon-Mapping.git
 cd Moon-Mapping
 pip install -r requirements.txt
 
@@ -35,7 +35,7 @@ AI Models/                  the super-resolution models
 ├── Transformer_Model-main/   SwinIR layers written from scratch (RSTB, STL, attention)
 ├── SwinIR/                   the project's working SwinIR copy + training notebooks
 ├── SwinIR-0.0/               earlier SwinIR snapshot, kept for comparison
-├── Swin-Transformer/         vendored upstream backbone
+├── Swin-Transformer/         vendored Swin Transformer backbone (Microsoft)
 └── REFERENCES.md             papers and code provenance
 
 DataSet/                    footprint geometry and dataset generation
@@ -92,15 +92,12 @@ and hyperparameters for each stage.
 shifted-window transformer, trained with L1, SSIM and perceptual losses in
 separate runs.
 
-**On trained weights.** The final epoch of each SwinIR run is published as
-release assets — `scripts/download_data.sh checkpoints` fetches all five
-(777 MB). The full epoch-by-epoch history (136 checkpoints, 17.6 GiB) stays in
-the [project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing).
-The SRGAN weights are a different matter: `srgan_config.py` points at
-`g_best.pth.tar` / `g_last.pth.tar`, and neither file exists anywhere. As
-shipped it therefore runs in no mode at all — to train from scratch you must
-first blank the two `pretrained_*_model_weights_path` settings. See
-[DATA.md § Trained weights and derived data](DATA.md#3-trained-weights-and-derived-data).
+**Weights and data.** `scripts/download_data.sh checkpoints` fetches the trained
+SwinIR checkpoints (five files, 777 MB), `training-data` fetches the crops they
+were trained on (1.7 GB), and `swinir-weights` fetches the original SwinIR
+models the test scripts expect. No trained SRGAN generator is published, so the
+SRGAN needs training before its `generate` / `evaluate` modes are usable — see
+[DATA.md § Model weights and training data](DATA.md#3-model-weights-and-training-data).
 
 ## Data sources
 

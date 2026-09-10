@@ -10,8 +10,9 @@ fetched from the archives it originally came from:
 | LRO **NAC** (EDR / CDR) | [LROC archive, ASU](https://pds.lroc.im-ldi.com/) | No |
 | Original **SwinIR** pretrained weights | [JingyunLiang/SwinIR releases](https://github.com/JingyunLiang/SwinIR/releases/tag/v0.0) | No |
 | This project's **trained SwinIR checkpoints** | [`swinir-checkpoints-v1` release](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/swinir-checkpoints-v1) | No |
+| This project's **SwinIR training data** | [`training-data-v1` release](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/training-data-v1) | No |
 
-`scripts/download_data.sh` drives all five. It is resumable — anything already
+`scripts/download_data.sh` drives all six. It is resumable — anything already
 present on disk is skipped — so an interrupted run is safe to repeat.
 
 ```bash
@@ -31,6 +32,7 @@ scripts/download_data.sh dirs                  # create the directory skeleton
 scripts/download_data.sh nac --limit 10        # 10 NAC EDRs (~2.5 GB)
 scripts/download_data.sh swinir-weights        # original SwinIR weights
 scripts/download_data.sh checkpoints           # this project's trained weights (777 MB)
+scripts/download_data.sh training-data         # the SwinIR training crops (1.7 GB)
 ```
 
 NAC product ids are read from
@@ -194,25 +196,59 @@ at your image pairs.
 
 ### Training data
 
-The 96×96 / 24×24 TMC–NAC crops used for training are not published. Ask the
-maintainers for a copy, or build your own set:
+```bash
+scripts/download_data.sh training-data
+```
 
-1. Download an orthorectified TMC image and an LRO NAC image that falls inside
-   it — `.../csv_files/tmc_nac_contains.csv` lists 11,940 such pairings.
+Downloads and unpacks the crops the SwinIR models were trained on into
+`data/training/`, from the
+[`training-data-v1`](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/training-data-v1)
+release:
+
+| Set | Pairs | Input | Target | Colour |
+|---|---|---|---|---|
+| `DataSet/` | 5,500 | 64×64 | 256×256 | RGB |
+| `DataSet_ Grayscale/` | 5,500 | 64×64 | 256×256 | grayscale |
+| `DataSet_Gray_High/` | 5,500 | 64×64 | 256×256 | grayscale |
+| `DataSet_Gray_8x/` | 3,054 | 64×64 | 512×512 | grayscale |
+
+Each set holds `Train/` (inputs) and `GT/` (targets), paired by filename:
+`Train/1234.png` matches `GT/1234.png`. The first three are ×4; the last is ×8.
+`DataSet_ Grayscale` and `DataSet_Gray_High` share the same `GT/` images and
+differ only in their `Train/` inputs.
+
+`--only <name>` fetches one set instead of all five, and the run logs come down
+as `training_logs.tar.gz`:
+
+```bash
+scripts/download_data.sh training-data --only dataset_gray_8x
+```
+
+Point the SwinIR notebooks (`AI Models/SwinIR/train.ipynb`) at the extracted
+directory.
+
+#### Building your own set
+
+The SRGAN expects 96×96 targets against 24×24 inputs, which is a different
+layout to the sets above. To generate pairs at any size from source imagery:
+
+1. Pick an orthorectified TMC image and an LRO NAC image that falls inside it —
+   `.../csv_files/tmc_nac_contains.csv` lists 11,940 such pairings — and
+   download both (see sections 1 and 2).
 2. Align them following
-   [`dataset-cleaning-creation-and-analysis/README.md`](dataset-cleaning-creation-and-analysis/README.md),
-   which covers cropping the TMC image to the NAC extent, matching brightness
-   and contrast, and rotating so features coincide. These steps are manual, done
-   in Fiji and GIMP.
-3. Save the aligned pair as `tmc.png` and `nac2.png`, then cut them into crops:
+   [`dataset-cleaning-creation-and-analysis/README.md`](dataset-cleaning-creation-and-analysis/README.md):
+   crop the TMC image to the NAC extent, match brightness and contrast, and
+   rotate so features coincide. These steps are manual, done in Fiji and GIMP.
+3. Save the aligned pair as `tmc.png` and `nac2.png`, then cut them up:
 
    ```bash
    python dataset-cleaning-creation-and-analysis/scripts/final_gen.py
    ```
 
-   One pair yields roughly 13,000 crops, written to `images/<name>/{high,low}/`.
+   One pair yields roughly 13,000 crops in `images/<name>/{high,low}/`. Edit the
+   `ns` variable in that script to change the target crop size.
 
-Point `srgan_config.py` or the SwinIR training notebooks at that directory.
+Point `srgan_config.py` at the result.
 
 ---
 

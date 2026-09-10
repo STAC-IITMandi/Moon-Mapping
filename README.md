@@ -92,8 +92,9 @@ and hyperparameters for each stage.
 shifted-window transformer, trained with L1, SSIM and perceptual losses in
 separate runs.
 
-**Weights.** `scripts/download_data.sh checkpoints` fetches the trained SwinIR
-checkpoints (five files, 777 MB); `swinir-weights` fetches the original SwinIR
+**Weights and data.** `scripts/download_data.sh checkpoints` fetches the trained
+SwinIR checkpoints (five files, 777 MB), `training-data` fetches the crops they
+were trained on (1.7 GB), and `swinir-weights` fetches the original SwinIR
 models the test scripts expect. No trained SRGAN generator is published, so the
 SRGAN needs training before its `generate` / `evaluate` modes are usable — see
 [DATA.md § Model weights and training data](DATA.md#3-model-weights-and-training-data).

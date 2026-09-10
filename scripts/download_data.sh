@@ -492,16 +492,15 @@ cmd_swinir_weights() {
       && mv "$zoo/$f.part" "$zoo/$f" || { rm -f "$zoo/$f.part"; warn "failed: $f"; }
   fi
   info "SwinIR weights done."
-  warn "These are the UPSTREAM SwinIR weights, not this project's. For the
-  project's own trained checkpoints run:  download_data.sh checkpoints
-  The SRGAN generator weights do not exist at all — srgan_config.py names
-  g_best.pth.tar / g_last.pth.tar, but neither was ever saved, so the SRGAN
-  runs in no mode until you blank its pretrained_* paths. See DATA.md."
+  info "These are the upstream SwinIR models. For this project's own trained
+  checkpoints run:  download_data.sh checkpoints"
 }
 
 # ---------------------------------------------------------------------------
 # checkpoints — this project's own trained SwinIR weights
 # ---------------------------------------------------------------------------
+# The final epoch of each training run, published as release assets. Earlier
+# epochs are not published. See DATA.md.
 CKPT_RELEASE="https://github.com/STAC-IITMandi/Moon-Mapping/releases/download/swinir-checkpoints-v1"
 cmd_checkpoints() {
   need curl
@@ -532,7 +531,7 @@ cmd_checkpoints() {
   done
   info "Checkpoints: $ok retrieved, $miss missing."
   if [[ "$miss" -gt 0 ]]; then
-    warn "If every file failed, the release may not be published yet:
+    warn "Could not fetch every checkpoint. Check the release listing:
     $CKPT_RELEASE"
   fi
 }

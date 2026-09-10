@@ -136,124 +136,83 @@ the ones PRADAN itself would have used. It works for any instrument.
 
 ---
 
-## 3. Trained weights and derived data
+## 3. Model weights and training data
 
-> **The project Google Drive is not redundant — do not delete it.** Two things
-> exist only there and cannot be recovered from any archive or by re-running any
-> script: the **training crops** (~1.8 GB, produced by manual image alignment)
-> and the **W&B / TensorBoard run logs** (~102 MB). The 131 intermediate
-> checkpoints are also Drive-only, though of much lower value. Details below.
-
-### The SwinIR checkpoints — final epochs published, full history in the Drive
-
-The last epoch of each training run is published as release assets, so the
-common case needs no Drive access:
+### Trained SwinIR checkpoints
 
 ```bash
 scripts/download_data.sh checkpoints
 ```
 
-That pulls five files (777 MB total) into `AI Models/SwinIR/Checkpoints/` from
-[`swinir-checkpoints-v1`](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/swinir-checkpoints-v1):
+Pulls five checkpoints (777 MB) into `AI Models/SwinIR/Checkpoints/` from the
+[`swinir-checkpoints-v1`](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/swinir-checkpoints-v1)
+release — the final epoch of each training run:
 
-| Asset | Run | Size |
+| File | Trained with | Size |
 |---|---|---|
-| `swinir_l1_epoch15.pt` | L1 loss, epoch 15 (last) | 157 MB |
-| `swinir_ssim_epoch33.pt` | SSIM loss, epoch 33 (last) | 157 MB |
-| `swinir_perceptual_epoch62.pt` | perceptual loss, epoch 62 (last) | 154 MB |
-| `swinir_perceptual_lightning_epoch26.ckpt` | Lightning perceptual-loss run, epoch 26 | 155 MB |
-| `swinir_run63_epoch63.pt` | unlabelled run in `Checkpoints/` root, epoch 63 | 154 MB |
+| `swinir_l1_epoch15.pt` | L1 loss | 157 MB |
+| `swinir_ssim_epoch33.pt` | SSIM loss | 157 MB |
+| `swinir_perceptual_epoch62.pt` | perceptual loss | 154 MB |
+| `swinir_perceptual_lightning_epoch26.ckpt` | perceptual loss (Lightning) | 155 MB |
+| `swinir_run63_epoch63.pt` | unlabelled | 154 MB |
 
-Two caveats worth knowing:
+Load one with `torch.load()`; the `.ckpt` is a PyTorch Lightning checkpoint and
+keeps its weights under the `state_dict` key.
 
-- These are the **latest** epoch of each run, not the **best** by any metric.
-  No evaluation log survived, so there is nothing to rank the epochs by. The
-  Lightning filename quotes a *training* loss, not a validation score.
-- `swinir_run63_epoch63.pt` comes from four loose checkpoints (epochs 60–63)
-  sitting in the `Checkpoints/` root with no run label. It is *probably* a
-  continuation of the perceptual-loss run: the epoch numbers carry on from 62,
-  and it stores the same 2,051 tensors as `swinir_perceptual_epoch62.pt`,
-  whereas the L1 checkpoint stores 1,120. That is strong circumstantial
-  evidence, not a label — treat the run attribution as unconfirmed.
+These are each run's last epoch rather than a best-scoring one, so if you care
+which performs better, evaluate them against your own held-out data. Earlier
+epochs are not published; ask the maintainers if you need them.
 
-The **full epoch-by-epoch history** — 136 checkpoints, 17.6 GiB — stays in the
-[project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing)
-under `Models/Moon-Mapping/AI Models/SwinIR/Checkpoints/`:
-`PerceptualLoss/` 62, `SSIM Loss - Pretrained Chkpts/` 33, `prev_ckpts/` 20,
-`L1_Chkpts/` 15, root 4, `model_1_pl_perceptual_loss/` 2. Copy them out by hand
-if you need intermediate epochs. Nothing there is regenerable without
-retraining.
+### Upstream SwinIR weights
 
-Skip `prev_ckpts/`: those 20 files are 122 KB each, far too small to be SwinIR
-weights, so they are not usable checkpoints.
+```bash
+scripts/download_data.sh swinir-weights
+```
 
-Not to be confused with the 13 `.pth` files under
-`SwinIR/experiments/pretrained_models/` and `SwinIR/model_zoo/swinir/` — those
-are *upstream* SwinIR weights, and `scripts/download_data.sh swinir-weights`
-fetches them from the SwinIR project's own releases.
+Fetches the 13 pretrained models published by the SwinIR authors into
+`AI Models/SwinIR/experiments/pretrained_models/` and
+`AI Models/SwinIR/model_zoo/swinir/`. `main_test_swinir.py` and `predict.py`
+expect them there.
 
-### The SRGAN weights — they do not exist
+### SRGAN weights
 
-`AI Models/Moon Mapping/srgan_config.py` reads its generator from
-`pretrained_weights/generate/g_best.pth.tar` (and `g_last.pth.tar` for resuming
-training), but **no such file was ever saved** — not in this repository, not in
-the project Drive, which contains no `.tar` files at all.
+There are none. `AI Models/Moon Mapping/srgan_config.py` points at
+`pretrained_weights/generate/g_best.pth.tar`, but no trained SRGAN generator
+was ever published, so `mode = "generate"` and `mode = "evaluate"` — and
+`cascade.py`, which drives the ×4 → ×16 cascade — have nothing to load.
 
-This means the SRGAN does not run in *any* mode as configured:
-
-- `mode = "generate"` / `"evaluate"` need a trained generator, so they cannot
-  work until one exists. `cascade.py` (the ×4 → ×16 cascade) likewise has
-  nothing to load.
-- `mode = "train"` also fails, less obviously. `train_srgan.py` guards its
-  pretrained-weight load with `if srgan_config.pretrained_g_model_weights_path:`
-  — a truthiness test on the *string*, not a check that the file is there. The
-  string is non-empty, so it calls `torch.load()` on the missing
-  `g_last.pth.tar` and dies with `FileNotFoundError`.
-
-To train from scratch, blank both paths in `srgan_config.py`:
+To train one yourself, blank these two settings first, or `train_srgan.py` will
+try to load the missing file and stop with `FileNotFoundError`:
 
 ```python
 pretrained_d_model_weights_path = ""
 pretrained_g_model_weights_path = ""
 ```
 
-### The derived training crops — Drive only, and NOT reproducibly regenerable
+Then set `mode = "train"` and point `train_gt_images_dir` / `train_lr_images_dir`
+at your image pairs.
 
-The training crops live in the
-[project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing)
-under `Models/Moon-Mapping/AI Models/SwinIR/`, in four variants totalling about
-1.8 GB:
+### Training data
 
-| Folder | Files |
-|---|---|
-| `DataSet/` | 11,000 |
-| `DataSet_ Grayscale/` | 11,000 |
-| `DataSet_Gray_High/` | 11,000 |
-| `DataSet_Gray_8x/` | 6,108 |
+The 96×96 / 24×24 TMC–NAC crops used for training are not published. Ask the
+maintainers for a copy, or build your own set:
 
-**Treat these as irreplaceable.** Only the last step of the pipeline that made
-them is scripted. Per
-[`dataset-cleaning-creation-and-analysis/README.md`](dataset-cleaning-creation-and-analysis/README.md),
-everything before it was done by hand:
+1. Download an orthorectified TMC image and an LRO NAC image that falls inside
+   it — `.../csv_files/tmc_nac_contains.csv` lists 11,940 such pairings.
+2. Align them following
+   [`dataset-cleaning-creation-and-analysis/README.md`](dataset-cleaning-creation-and-analysis/README.md),
+   which covers cropping the TMC image to the NAC extent, matching brightness
+   and contrast, and rotating so features coincide. These steps are manual, done
+   in Fiji and GIMP.
+3. Save the aligned pair as `tmc.png` and `nac2.png`, then cut them into crops:
 
-- the TMC image was cropped manually in Fiji,
-- brightness and contrast were matched manually in Fiji, verified with a digital
-  colour meter,
-- rotation was done manually in GIMP, with "slight scaling changes… also done
-  manually".
+   ```bash
+   python dataset-cleaning-creation-and-analysis/scripts/final_gen.py
+   ```
 
-[`final_gen.py`](dataset-cleaning-creation-and-analysis/scripts/final_gen.py)
-only performs the final cut-up, and it reads two aligned full-size images
-(`tmc.png`, `nac2.png`) that **are not in the Drive and do not survive anywhere**.
+   One pair yields roughly 13,000 crops, written to `images/<name>/{high,low}/`.
 
-So the crops cannot be regenerated bit-for-bit. Re-running the pipeline means
-redoing the manual alignment by eye and getting different pixels — which also
-means the published checkpoints could not be re-evaluated against the data they
-were trained on. Copy these out of the Drive before you touch it.
-
-One further gap: there is no record of which variant trained which run. Nothing
-in the code or the filenames maps `DataSet_Gray_8x` (or any other) to the L1,
-SSIM or perceptual-loss checkpoints.
+Point `srgan_config.py` or the SwinIR training notebooks at that directory.
 
 ---
 

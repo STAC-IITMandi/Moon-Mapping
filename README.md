@@ -22,7 +22,7 @@ cd Moon-Mapping
 pip install -r requirements.txt
 
 scripts/download_data.sh help     # what's available
-scripts/download_data.sh all      # dirs + sample NAC images + SwinIR weights
+scripts/download_data.sh all      # dirs + sample NAC images + all public weights
 ```
 
 The Chandrayaan-2 half needs a free PRADAN account — see [DATA.md](DATA.md).
@@ -92,14 +92,15 @@ and hyperparameters for each stage.
 shifted-window transformer, trained with L1, SSIM and perceptual losses in
 separate runs.
 
-**On trained weights.** The 136 SwinIR checkpoints were never published to a
-public mirror and remain in the
-[project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing).
+**On trained weights.** The final epoch of each SwinIR run is published as
+release assets — `scripts/download_data.sh checkpoints` fetches all five
+(777 MB). The full epoch-by-epoch history (136 checkpoints, 17.6 GiB) stays in
+the [project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing).
 The SRGAN weights are a different matter: `srgan_config.py` points at
 `g_best.pth.tar` / `g_last.pth.tar`, and neither file exists anywhere. As
 shipped it therefore runs in no mode at all — to train from scratch you must
 first blank the two `pretrained_*_model_weights_path` settings. See
-[DATA.md § What cannot be re-downloaded](DATA.md#3-what-cannot-be-re-downloaded).
+[DATA.md § Trained weights and derived data](DATA.md#3-trained-weights-and-derived-data).
 
 ## Data sources
 

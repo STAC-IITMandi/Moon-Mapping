@@ -14,10 +14,11 @@
 #   dirs                Create the empty data directory skeleton
 #   nac                 Download LRO NAC images from the LROC archive  (public)
 #   swinir-weights      Download upstream SwinIR pretrained weights    (public)
+#   checkpoints         Download this project's trained SwinIR weights   (public)
 #   ohrc                Download Chandrayaan-2 OHRC products from PRADAN  (login)
 #   tmc                 Download Chandrayaan-2 TMC-2 products from PRADAN  (login)
 #   pradan-script FILE  Download every product listed in a PRADAN-generated script
-#   all                 dirs + nac + swinir-weights  (everything not needing a login)
+#   all                 dirs + nac + weights + checkpoints (all the public sources)
 #
 # Run `scripts/download_data.sh help <command>` for per-command options.
 #
@@ -491,12 +492,49 @@ cmd_swinir_weights() {
       && mv "$zoo/$f.part" "$zoo/$f" || { rm -f "$zoo/$f.part"; warn "failed: $f"; }
   fi
   info "SwinIR weights done."
-  warn "These are the UPSTREAM SwinIR weights, not this project's.
-  The project's own 136 SwinIR checkpoints (L1 / SSIM / perceptual-loss runs)
-  were never published to a public mirror and live only in the project Google
-  Drive. The SRGAN generator weights do not exist at all — srgan_config.py
-  names g_best.pth.tar / g_last.pth.tar, but neither was ever saved, so the
-  SRGAN runs in no mode until you blank its pretrained_* paths. See DATA.md."
+  warn "These are the UPSTREAM SwinIR weights, not this project's. For the
+  project's own trained checkpoints run:  download_data.sh checkpoints
+  The SRGAN generator weights do not exist at all — srgan_config.py names
+  g_best.pth.tar / g_last.pth.tar, but neither was ever saved, so the SRGAN
+  runs in no mode until you blank its pretrained_* paths. See DATA.md."
+}
+
+# ---------------------------------------------------------------------------
+# checkpoints — this project's own trained SwinIR weights
+# ---------------------------------------------------------------------------
+CKPT_RELEASE="https://github.com/STAC-IITMandi/Moon-Mapping/releases/download/swinir-checkpoints-v1"
+cmd_checkpoints() {
+  need curl
+  local dest="$REPO_ROOT/AI Models/SwinIR/Checkpoints"
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --dest) dest="$2"; shift 2 ;;
+      *) die "unknown option for 'checkpoints': $1" ;;
+    esac
+  done
+  mkdir -p "$dest"
+  info "Downloading the project's trained SwinIR checkpoints into $dest"
+  local f ok=0 miss=0
+  for f in \
+    swinir_l1_epoch15.pt \
+    swinir_ssim_epoch33.pt \
+    swinir_perceptual_epoch62.pt \
+    swinir_perceptual_lightning_epoch26.ckpt \
+    swinir_run63_epoch63.pt \
+    ; do
+    if [[ -s "$dest/$f" ]]; then step "have $f"; ok=$((ok+1)); continue; fi
+    step "$f"
+    if curl -fsSL --max-time 3600 -o "$dest/$f.part" "$CKPT_RELEASE/$f"; then
+      mv "$dest/$f.part" "$dest/$f"; ok=$((ok+1))
+    else
+      rm -f "$dest/$f.part"; warn "failed: $f"; miss=$((miss+1))
+    fi
+  done
+  info "Checkpoints: $ok retrieved, $miss missing."
+  if [[ "$miss" -gt 0 ]]; then
+    warn "If every file failed, the release may not be published yet:
+    $CKPT_RELEASE"
+  fi
 }
 
 # ---------------------------------------------------------------------------
@@ -510,10 +548,11 @@ main() {
     dirs)            cmd_dirs "$@" ;;
     nac)             cmd_nac "$@" ;;
     swinir-weights)  cmd_swinir_weights "$@" ;;
+    checkpoints)     cmd_checkpoints "$@" ;;
     ohrc)            cmd_ohrc "$@" ;;
     tmc)             cmd_tmc "$@" ;;
     pradan-script)   cmd_pradan_script "$@" ;;
-    all)             cmd_dirs; cmd_nac --limit 4; cmd_swinir_weights ;;
+    all)             cmd_dirs; cmd_nac --limit 4; cmd_swinir_weights; cmd_checkpoints ;;
     help|-h|--help)  cmd_help ;;
     *) die "unknown command '$cmd'. Run: scripts/download_data.sh help" ;;
   esac

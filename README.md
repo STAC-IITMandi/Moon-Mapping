@@ -17,7 +17,7 @@ Two model families were tried, an SRGAN and a SwinIR transformer.
 ## Quick start
 
 ```bash
-git clone https://github.com/Sukhvansh2004/Moon-Mapping.git
+git clone https://github.com/STAC-IITMandi/Moon-Mapping.git
 cd Moon-Mapping
 pip install -r requirements.txt
 
@@ -35,7 +35,7 @@ AI Models/                  the super-resolution models
 ├── Transformer_Model-main/   SwinIR layers written from scratch (RSTB, STL, attention)
 ├── SwinIR/                   the project's working SwinIR copy + training notebooks
 ├── SwinIR-0.0/               earlier SwinIR snapshot, kept for comparison
-├── Swin-Transformer/         vendored upstream backbone
+├── Swin-Transformer/         vendored Swin Transformer backbone (Microsoft)
 └── REFERENCES.md             papers and code provenance
 
 DataSet/                    footprint geometry and dataset generation
@@ -93,7 +93,7 @@ shifted-window transformer, trained with L1, SSIM and perceptual losses in
 separate runs.
 
 **Weights.** `scripts/download_data.sh checkpoints` fetches the trained SwinIR
-checkpoints (five files, 777 MB); `swinir-weights` fetches the upstream SwinIR
+checkpoints (five files, 777 MB); `swinir-weights` fetches the original SwinIR
 models the test scripts expect. No trained SRGAN generator is published, so the
 SRGAN needs training before its `generate` / `evaluate` modes are usable — see
 [DATA.md § Model weights and training data](DATA.md#3-model-weights-and-training-data).

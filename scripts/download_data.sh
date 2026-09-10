@@ -13,7 +13,7 @@
 # Commands:
 #   dirs                Create the empty data directory skeleton
 #   nac                 Download LRO NAC images from the LROC archive  (public)
-#   swinir-weights      Download upstream SwinIR pretrained weights    (public)
+#   swinir-weights      Download the original SwinIR pretrained weights (public)
 #   checkpoints         Download this project's trained SwinIR weights   (public)
 #   ohrc                Download Chandrayaan-2 OHRC products from PRADAN  (login)
 #   tmc                 Download Chandrayaan-2 TMC-2 products from PRADAN  (login)
@@ -463,7 +463,7 @@ cmd_swinir_weights() {
   local zoo="$REPO_ROOT/AI Models/SwinIR/model_zoo/swinir"
   mkdir -p "$dest" "$zoo"
   local rel="https://github.com/JingyunLiang/SwinIR/releases/download/v0.0"
-  info "Downloading upstream SwinIR weights into AI Models/SwinIR/"
+  info "Downloading the original SwinIR weights into AI Models/SwinIR/"
   local f
   for f in \
     003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN.pth \
@@ -492,7 +492,7 @@ cmd_swinir_weights() {
       && mv "$zoo/$f.part" "$zoo/$f" || { rm -f "$zoo/$f.part"; warn "failed: $f"; }
   fi
   info "SwinIR weights done."
-  info "These are the upstream SwinIR models. For this project's own trained
+  info "These are the original SwinIR models. For this project's own trained
   checkpoints run:  download_data.sh checkpoints"
 }
 

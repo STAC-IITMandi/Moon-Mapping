@@ -8,7 +8,7 @@ fetched from the archives it originally came from:
 | Chandrayaan-2 **TMC-2** (orthorectified + browse) | [ISRO PRADAN](https://pradan.issdc.gov.in/ch2/) | Yes |
 | Chandrayaan-2 **OHRC** (raw + calibrated) | [ISRO PRADAN](https://pradan.issdc.gov.in/ch2/) | Yes |
 | LRO **NAC** (EDR / CDR) | [LROC archive, ASU](https://pds.lroc.im-ldi.com/) | No |
-| Upstream **SwinIR** pretrained weights | [JingyunLiang/SwinIR releases](https://github.com/JingyunLiang/SwinIR/releases/tag/v0.0) | No |
+| Original **SwinIR** pretrained weights | [JingyunLiang/SwinIR releases](https://github.com/JingyunLiang/SwinIR/releases/tag/v0.0) | No |
 | This project's **trained SwinIR checkpoints** | [`swinir-checkpoints-v1` release](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/swinir-checkpoints-v1) | No |
 
 `scripts/download_data.sh` drives all five. It is resumable — anything already
@@ -29,7 +29,7 @@ Data lands in `data/` by default. To put it on another disk, export
 ```bash
 scripts/download_data.sh dirs                  # create the directory skeleton
 scripts/download_data.sh nac --limit 10        # 10 NAC EDRs (~2.5 GB)
-scripts/download_data.sh swinir-weights        # upstream SwinIR weights
+scripts/download_data.sh swinir-weights        # original SwinIR weights
 scripts/download_data.sh checkpoints           # this project's trained weights (777 MB)
 ```
 
@@ -163,13 +163,13 @@ These are each run's last epoch rather than a best-scoring one, so if you care
 which performs better, evaluate them against your own held-out data. Earlier
 epochs are not published; ask the maintainers if you need them.
 
-### Upstream SwinIR weights
+### Original SwinIR weights
 
 ```bash
 scripts/download_data.sh swinir-weights
 ```
 
-Fetches the 13 pretrained models published by the SwinIR authors into
+Fetches the 13 pretrained models released by the SwinIR authors into
 `AI Models/SwinIR/experiments/pretrained_models/` and
 `AI Models/SwinIR/model_zoo/swinir/`. `main_test_swinir.py` and `predict.py`
 expect them there.

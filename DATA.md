@@ -9,13 +9,14 @@ fetched from the archives it originally came from:
 | Chandrayaan-2 **OHRC** (raw + calibrated) | [ISRO PRADAN](https://pradan.issdc.gov.in/ch2/) | Yes |
 | LRO **NAC** (EDR / CDR) | [LROC archive, ASU](https://pds.lroc.im-ldi.com/) | No |
 | Upstream **SwinIR** pretrained weights | [JingyunLiang/SwinIR releases](https://github.com/JingyunLiang/SwinIR/releases/tag/v0.0) | No |
+| This project's **trained SwinIR checkpoints** | [`swinir-checkpoints-v1` release](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/swinir-checkpoints-v1) | No |
 
-`scripts/download_data.sh` drives all four. It is resumable — anything already
+`scripts/download_data.sh` drives all five. It is resumable — anything already
 present on disk is skipped — so an interrupted run is safe to repeat.
 
 ```bash
 scripts/download_data.sh help        # commands and options
-scripts/download_data.sh all         # dirs + a few NAC images + SwinIR weights
+scripts/download_data.sh all         # dirs + a few NAC images + all public weights
 ```
 
 Data lands in `data/` by default. To put it on another disk, export
@@ -29,6 +30,7 @@ Data lands in `data/` by default. To put it on another disk, export
 scripts/download_data.sh dirs                  # create the directory skeleton
 scripts/download_data.sh nac --limit 10        # 10 NAC EDRs (~2.5 GB)
 scripts/download_data.sh swinir-weights        # upstream SwinIR weights
+scripts/download_data.sh checkpoints           # this project's trained weights (777 MB)
 ```
 
 NAC product ids are read from
@@ -134,25 +136,89 @@ the ones PRADAN itself would have used. It works for any instrument.
 
 ---
 
-## 3. What cannot be re-downloaded
+## 3. Trained weights and derived data
 
-Two things in the original project Google Drive have no public source:
+### The SwinIR checkpoints — final epochs published, full history in the Drive
 
-- **The project's own trained checkpoints** — the SRGAN generator
-  (`g_best.pth.tar`, `g_last.pth.tar`) and the SwinIR runs (L1, SSIM,
-  perceptual-loss variants, ~150 checkpoints). `srgan_config.py` expects them at
-  `pretrained_weights/generate/g_best.pth.tar`.
-- **The derived training crops** — the ~39,000 96×96 / 24×24 TMC–NAC image pairs
-  under `SwinIR/DataSet*`.
+The last epoch of each training run is published as release assets, so the
+common case needs no Drive access:
 
-The crops are *reproducible*: get one TMC–NAC pair, follow the alignment steps in
+```bash
+scripts/download_data.sh checkpoints
+```
+
+That pulls five files (777 MB total) into `AI Models/SwinIR/Checkpoints/` from
+[`swinir-checkpoints-v1`](https://github.com/STAC-IITMandi/Moon-Mapping/releases/tag/swinir-checkpoints-v1):
+
+| Asset | Run | Size |
+|---|---|---|
+| `swinir_l1_epoch15.pt` | L1 loss, epoch 15 (last) | 157 MB |
+| `swinir_ssim_epoch33.pt` | SSIM loss, epoch 33 (last) | 157 MB |
+| `swinir_perceptual_epoch62.pt` | perceptual loss, epoch 62 (last) | 154 MB |
+| `swinir_perceptual_lightning_epoch26.ckpt` | Lightning perceptual-loss run, epoch 26 | 155 MB |
+| `swinir_run63_epoch63.pt` | unlabelled run in `Checkpoints/` root, epoch 63 | 154 MB |
+
+Two caveats worth knowing:
+
+- These are the **latest** epoch of each run, not the **best** by any metric.
+  No evaluation log survived, so there is nothing to rank the epochs by. The
+  Lightning filename quotes a *training* loss, not a validation score.
+- `swinir_run63_epoch63.pt` comes from four loose checkpoints (epochs 60–63)
+  sitting in the `Checkpoints/` root with no run label. It is *probably* a
+  continuation of the perceptual-loss run: the epoch numbers carry on from 62,
+  and it stores the same 2,051 tensors as `swinir_perceptual_epoch62.pt`,
+  whereas the L1 checkpoint stores 1,120. That is strong circumstantial
+  evidence, not a label — treat the run attribution as unconfirmed.
+
+The **full epoch-by-epoch history** — 136 checkpoints, 17.6 GiB — stays in the
+[project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing)
+under `Models/Moon-Mapping/AI Models/SwinIR/Checkpoints/`:
+`PerceptualLoss/` 62, `SSIM Loss - Pretrained Chkpts/` 33, `prev_ckpts/` 20,
+`L1_Chkpts/` 15, root 4, `model_1_pl_perceptual_loss/` 2. Copy them out by hand
+if you need intermediate epochs. Nothing there is regenerable without
+retraining.
+
+Skip `prev_ckpts/`: those 20 files are 122 KB each, far too small to be SwinIR
+weights, so they are not usable checkpoints.
+
+Not to be confused with the 13 `.pth` files under
+`SwinIR/experiments/pretrained_models/` and `SwinIR/model_zoo/swinir/` — those
+are *upstream* SwinIR weights, and `scripts/download_data.sh swinir-weights`
+fetches them from the SwinIR project's own releases.
+
+### The SRGAN weights — they do not exist
+
+`AI Models/Moon Mapping/srgan_config.py` reads its generator from
+`pretrained_weights/generate/g_best.pth.tar` (and `g_last.pth.tar` for resuming
+training), but **no such file was ever saved** — not in this repository, not in
+the project Drive, which contains no `.tar` files at all.
+
+This means the SRGAN does not run in *any* mode as configured:
+
+- `mode = "generate"` / `"evaluate"` need a trained generator, so they cannot
+  work until one exists. `cascade.py` (the ×4 → ×16 cascade) likewise has
+  nothing to load.
+- `mode = "train"` also fails, less obviously. `train_srgan.py` guards its
+  pretrained-weight load with `if srgan_config.pretrained_g_model_weights_path:`
+  — a truthiness test on the *string*, not a check that the file is there. The
+  string is non-empty, so it calls `torch.load()` on the missing
+  `g_last.pth.tar` and dies with `FileNotFoundError`.
+
+To train from scratch, blank both paths in `srgan_config.py`:
+
+```python
+pretrained_d_model_weights_path = ""
+pretrained_g_model_weights_path = ""
+```
+
+### The derived training crops — regenerable
+
+The ~39,000 96×96 / 24×24 TMC–NAC pairs under `SwinIR/DataSet*` in the Drive are
+*reproducible*: get one TMC–NAC pair, follow the alignment steps in
 [`dataset-cleaning-creation-and-analysis/README.md`](dataset-cleaning-creation-and-analysis/README.md),
 then cut them up with
 [`dataset-cleaning-creation-and-analysis/scripts/final_gen.py`](dataset-cleaning-creation-and-analysis/scripts/final_gen.py).
 One pair yields roughly 13,000 crops.
-
-The checkpoints are not reproducible without retraining. They remain in the
-[project Drive folder](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing).
 
 ---
 

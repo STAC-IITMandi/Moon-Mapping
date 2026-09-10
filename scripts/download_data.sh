@@ -15,10 +15,11 @@
 #   nac                 Download LRO NAC images from the LROC archive  (public)
 #   swinir-weights      Download the original SwinIR pretrained weights (public)
 #   checkpoints         Download this project's trained SwinIR weights   (public)
+#   training-data       Download the SwinIR training crops + run logs   (public)
 #   ohrc                Download Chandrayaan-2 OHRC products from PRADAN  (login)
 #   tmc                 Download Chandrayaan-2 TMC-2 products from PRADAN  (login)
 #   pradan-script FILE  Download every product listed in a PRADAN-generated script
-#   all                 dirs + nac + weights + checkpoints (all the public sources)
+#   all                 dirs + nac + weights + checkpoints (not training-data)
 #
 # Run `scripts/download_data.sh help <command>` for per-command options.
 #
@@ -537,6 +538,53 @@ cmd_checkpoints() {
 }
 
 # ---------------------------------------------------------------------------
+# training-data — the paired crops the SwinIR models were trained on
+# ---------------------------------------------------------------------------
+DATA_RELEASE="https://github.com/STAC-IITMandi/Moon-Mapping/releases/download/training-data-v1"
+cmd_training_data() {
+  need curl; need tar
+  local dest="$DATA_ROOT/training" only=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --dest) dest="$2"; shift 2 ;;
+      --only) only="$2"; shift 2 ;;
+      *) die "unknown option for 'training-data': $1" ;;
+    esac
+  done
+  mkdir -p "$dest"
+  info "Downloading SwinIR training data into $dest"
+  local f ok=0 miss=0
+  for f in \
+    dataset_rgb_x4.tar.gz \
+    dataset_grayscale_x4.tar.gz \
+    dataset_gray_high_x4.tar.gz \
+    dataset_gray_8x.tar.gz \
+    training_logs.tar.gz \
+    ; do
+    if [[ -n "$only" && "$f" != *"$only"* ]]; then continue; fi
+    # Each tarball holds one top-level directory; if it is already unpacked,
+    # there is nothing to do.
+    local marker="$dest/.${f%.tar.gz}.done"
+    if [[ -f "$marker" ]]; then step "have ${f%.tar.gz}"; ok=$((ok+1)); continue; fi
+    step "$f"
+    if ! curl -fsSL --max-time 7200 -o "$dest/$f.part" "$DATA_RELEASE/$f"; then
+      rm -f "$dest/$f.part"; warn "failed: $f"; miss=$((miss+1)); continue
+    fi
+    mv "$dest/$f.part" "$dest/$f"
+    if tar -xzf "$dest/$f" -C "$dest"; then
+      rm -f "$dest/$f"; touch "$marker"; ok=$((ok+1))
+    else
+      warn "could not extract $f"; miss=$((miss+1))
+    fi
+  done
+  info "Training data: $ok ready, $miss missing."
+  if [[ "$miss" -gt 0 ]]; then
+    warn "Could not fetch everything. Check the release listing:
+    $DATA_RELEASE"
+  fi
+}
+
+# ---------------------------------------------------------------------------
 cmd_help() {
   sed -n '2,/^set -euo/p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//; /^set -euo/d'
 }
@@ -548,6 +596,7 @@ main() {
     nac)             cmd_nac "$@" ;;
     swinir-weights)  cmd_swinir_weights "$@" ;;
     checkpoints)     cmd_checkpoints "$@" ;;
+    training-data)   cmd_training_data "$@" ;;
     ohrc)            cmd_ohrc "$@" ;;
     tmc)             cmd_tmc "$@" ;;
     pradan-script)   cmd_pradan_script "$@" ;;

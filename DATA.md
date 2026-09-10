@@ -138,6 +138,12 @@ the ones PRADAN itself would have used. It works for any instrument.
 
 ## 3. Trained weights and derived data
 
+> **The project Google Drive is not redundant — do not delete it.** Two things
+> exist only there and cannot be recovered from any archive or by re-running any
+> script: the **training crops** (~1.8 GB, produced by manual image alignment)
+> and the **W&B / TensorBoard run logs** (~102 MB). The 131 intermediate
+> checkpoints are also Drive-only, though of much lower value. Details below.
+
 ### The SwinIR checkpoints — final epochs published, full history in the Drive
 
 The last epoch of each training run is published as release assets, so the
@@ -211,14 +217,43 @@ pretrained_d_model_weights_path = ""
 pretrained_g_model_weights_path = ""
 ```
 
-### The derived training crops — regenerable
+### The derived training crops — Drive only, and NOT reproducibly regenerable
 
-The ~39,000 96×96 / 24×24 TMC–NAC pairs under `SwinIR/DataSet*` in the Drive are
-*reproducible*: get one TMC–NAC pair, follow the alignment steps in
+The training crops live in the
+[project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing)
+under `Models/Moon-Mapping/AI Models/SwinIR/`, in four variants totalling about
+1.8 GB:
+
+| Folder | Files |
+|---|---|
+| `DataSet/` | 11,000 |
+| `DataSet_ Grayscale/` | 11,000 |
+| `DataSet_Gray_High/` | 11,000 |
+| `DataSet_Gray_8x/` | 6,108 |
+
+**Treat these as irreplaceable.** Only the last step of the pipeline that made
+them is scripted. Per
 [`dataset-cleaning-creation-and-analysis/README.md`](dataset-cleaning-creation-and-analysis/README.md),
-then cut them up with
-[`dataset-cleaning-creation-and-analysis/scripts/final_gen.py`](dataset-cleaning-creation-and-analysis/scripts/final_gen.py).
-One pair yields roughly 13,000 crops.
+everything before it was done by hand:
+
+- the TMC image was cropped manually in Fiji,
+- brightness and contrast were matched manually in Fiji, verified with a digital
+  colour meter,
+- rotation was done manually in GIMP, with "slight scaling changes… also done
+  manually".
+
+[`final_gen.py`](dataset-cleaning-creation-and-analysis/scripts/final_gen.py)
+only performs the final cut-up, and it reads two aligned full-size images
+(`tmc.png`, `nac2.png`) that **are not in the Drive and do not survive anywhere**.
+
+So the crops cannot be regenerated bit-for-bit. Re-running the pipeline means
+redoing the manual alignment by eye and getting different pixels — which also
+means the published checkpoints could not be re-evaluated against the data they
+were trained on. Copy these out of the Drive before you touch it.
+
+One further gap: there is no record of which variant trained which run. Nothing
+in the code or the filenames maps `DataSet_Gray_8x` (or any other) to the L1,
+SSIM or perceptual-loss checkpoints.
 
 ---
 

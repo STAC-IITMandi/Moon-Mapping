@@ -95,7 +95,9 @@ separate runs.
 **On trained weights.** The final epoch of each SwinIR run is published as
 release assets — `scripts/download_data.sh checkpoints` fetches all five
 (777 MB). The full epoch-by-epoch history (136 checkpoints, 17.6 GiB) stays in
-the [project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing).
+the [project Drive](https://drive.google.com/drive/folders/19TyNbSyd7i1igZMVw4YRX5xonl55yZTb?usp=sharing),
+which also holds the only copy of the training crops — those were produced by
+manual image alignment and cannot be regenerated, so the Drive must be kept.
 The SRGAN weights are a different matter: `srgan_config.py` points at
 `g_best.pth.tar` / `g_last.pth.tar`, and neither file exists anywhere. As
 shipped it therefore runs in no mode at all — to train from scratch you must
